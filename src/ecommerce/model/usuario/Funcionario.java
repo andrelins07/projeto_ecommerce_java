@@ -9,7 +9,7 @@ public class Funcionario extends Usuario {
 	private final String ROLE = "funcionario";
 	
 	
-	public Funcionario(String nome, LocalDate dataNascimento, String login, String senha, String cargo, float salario) {
+	public Funcionario(String nome, LocalDate dataNascimento, String login, int senha, String cargo, float salario) {
 		super(nome, dataNascimento, login, senha);
 		this.cargo = cargo;
 		this.salario = salario;
@@ -38,5 +38,15 @@ public class Funcionario extends Usuario {
 		return ROLE;
 	}
 	
+	
+	@Override
+	public void visualizar() {
+		System.out.printf("""
+				\n****************************************************************
+				Funcionario:
+				****************************************************************\n""");
+		super.visualizar();
+		System.out.printf("Cargo: %s | Salario: %.2f\n\n", this.cargo, this.salario);
+	}
 
 }

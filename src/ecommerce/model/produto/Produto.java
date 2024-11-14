@@ -45,6 +45,11 @@ public class Produto {
 	public void setRestricaoIdade(boolean restricaoIdade) {
 		this.restricaoIdade = restricaoIdade;
 	}
+	@Override
+	public String toString() {
+		return "Produto [codigo=" + codigo + ", nome=" + nome + ", preco=" + preco + ", estoque=" + estoque
+				+ ", restricaoIdade=" + restricaoIdade + "]";
+	}
 	
 	
 }

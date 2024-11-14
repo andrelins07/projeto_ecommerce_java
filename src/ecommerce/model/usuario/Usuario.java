@@ -7,10 +7,10 @@ public abstract class Usuario {
 	private String nome;
 	private LocalDate dataNascimento;
 	private String login;
-	private String senha;
+	private int senha;
 
 
-	public Usuario(String nome, LocalDate dataNascimento, String login, String senha) {
+	public Usuario(String nome, LocalDate dataNascimento, String login, int senha) {
 		this.nome = nome;
 		this.dataNascimento = dataNascimento;
 		this.login = login;
@@ -35,13 +35,16 @@ public abstract class Usuario {
 	public void setLogin(String login) {
 		this.login = login;
 	}
-	public String getSenha() {
+	public int getSenha() {
 		return senha;
 	}
-	public void setSenha(String senha) {
+	public void setSenha(int senha) {
 		this.senha = senha;
 	}
 	
-	
-	
+	public void visualizar() {
+
+		System.out.printf("""
+				Nome: %s | Data de Nascimento: %s | Login: %s\n""", this.nome, this.dataNascimento.toString(), this.login);
+	}
 }

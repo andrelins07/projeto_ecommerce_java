@@ -1,5 +1,10 @@
 package ecommerce;
 
+import java.time.LocalDate;
+
+import ecommerce.model.produto.Produto;
+import ecommerce.model.usuario.Cliente;
+import ecommerce.model.usuario.Funcionario;
 import ecommerce.util.Cores;
 import ecommerce.util.Leitura;
 
@@ -25,6 +30,8 @@ public class Menu {
 					--------------------------------------------------
 					9 - Comprar
 					10 - Visualizar Compras
+					--------------------------------------------------
+					11 - Testes
 					--------------------------------------------------
 					0 - Sair
 					***************************************************
@@ -60,6 +67,8 @@ public class Menu {
 				case 9 -> System.out.println("comprando...");
 				
 				case 10 -> System.out.println("visualizando compras");
+				
+				case 11 -> testes();
 
 				default -> System.out.println("\nOpção Inválida!\n");
 
@@ -81,6 +90,23 @@ public class Menu {
 				Email: andrelins2403@gmail.com
 				****************************************************
 				""");
-
+	}
+	public static void testes() {
+		
+		System.out.println("Criando funcionario: ");
+		
+		Funcionario funcionario = new Funcionario("Andre Lins", LocalDate.of(1999, 01, 18), "a.lins", 1801, "Dev Java", 4000f);
+		funcionario.visualizar();
+		
+		System.out.println("Criando um cliente: ");
+		
+		Cliente cliente = new Cliente("Andre de Brito", LocalDate.of(1999, 01, 18), "andre.brito", 1801, "SBC - SP");
+		cliente.visualizar();
+		
+		System.out.println("Criando um produto: ");
+		
+		Produto produto = new Produto(1,"Cafe", 18.99f,20,false);
+		System.out.println(produto);
+			
 	}
 }

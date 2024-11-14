@@ -8,7 +8,7 @@ public class Cliente extends Usuario {
 	private String enderecoEntrega;
 	private final String ROLE = "cliente";
 	
-	public Cliente(String nome, LocalDate dataNascimento, String login, String senha, String endereco) {
+	public Cliente(String nome, LocalDate dataNascimento, String login, int senha, String endereco) {
 		super(nome, dataNascimento, login, senha);
 		this.enderecoEntrega = endereco;
 	}
@@ -33,6 +33,14 @@ public class Cliente extends Usuario {
 		return ROLE;
 	}
 	
-	
+	@Override
+	public void visualizar() {
+		System.out.printf("""
+				\n****************************************************************
+				Cliente:
+				****************************************************************\n""");
+		super.visualizar();
+		System.out.printf("Endereco Entrega: %s\n\n", this.enderecoEntrega);
+	}
 	
 }
