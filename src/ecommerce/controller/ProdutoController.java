@@ -66,6 +66,10 @@ public class ProdutoController  implements ProdutoRepository{
 			throw new RegraDeNegocioException("Produto já cadastrado");
 		}
 		produtos.add(novoProduto);
+		
+		System.out.println(Cores.TEXT_GREEN + "Produto cadastrado com sucesso!");
+		
+		produto.visualizarProduto();
 
 	}
 	@Override

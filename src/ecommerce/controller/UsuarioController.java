@@ -4,6 +4,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import ecommerce.exception.RegraDeNegocioException;
 import ecommerce.model.*;
+import ecommerce.model.pagamento.Pagamento;
+import ecommerce.model.pagamento.PagamentoCredito;
+import ecommerce.model.pagamento.PagamentoDebito;
 import ecommerce.repository.UsuarioRepository;
 import ecommerce.util.Cores;
 import ecommerce.util.Leitura;
@@ -99,6 +102,8 @@ public class UsuarioController implements UsuarioRepository{
 			throw new RegraDeNegocioException("Acesso restrito para usuario Funcionario!");
 		}
 		
+		Cliente cliente = (Cliente) usuario;
+		
 		Produto produto = ProdutoController.buscarProduto();
 		
 		produto.visualizarProduto();
@@ -113,11 +118,25 @@ public class UsuarioController implements UsuarioRepository{
 			throw new RegraDeNegocioException("Estoque insuficiente!");
 		}
 		
-		Cliente cliente = (Cliente) usuario;
+		int formaPagamento = Leitura.lerInteiro("Qual a forma de pagamento ?\n1 - Credito | 2 - Débito");
 		
-		cliente.realizarCompra(produto.getNome(), produto.getPreco(), quantidade, LocalDate.now());
+		Pagamento pagamento;
+		
+		switch(formaPagamento) {
+
+			case 1 -> pagamento = new PagamentoCredito(produto.getPreco() * quantidade, cliente);
+			case 2 -> pagamento = new PagamentoDebito(produto.getPreco() * quantidade);
+			default -> throw new RegraDeNegocioException("Opcao invalida!");
+		}
+		
+		pagamento.processarPagamento();
+	
+		cliente.realizarCompra(produto.getNome(), quantidade, LocalDate.now(), pagamento);
+		
+		
 		
 		produto.setEstoque(quantidade*-1);
+		
 		
 		System.out.println(Cores.TEXT_GREEN + "Compra realizada com sucesso!");
 	}
@@ -168,6 +187,24 @@ public class UsuarioController implements UsuarioRepository{
 		String cargo = Leitura.lerString("Alterando cargo: ");
 		float salario = Leitura.lerFloat("Alterando salario: ");
 		funcionario.atualizar(login, senha, cargo, salario);
+	}
+	public void adicionarSaldoCarteira() {
+		
+		usuario = buscarUsuario();
+		
+
+		if(!usuario.getRole().equals(Role.CLIENTE)) {
+			throw new RegraDeNegocioException("Acesso restrito para usuario Funcionario!");
+		}
+	
+		Cliente cliente = (Cliente) usuario;
+
+		cliente.adicionarSaldoCarteira(Leitura.lerFloat("Digite o valor que deseja adicionar: "));
+		
+		System.out.println(Cores.TEXT_GREEN + "Saldo adicionado com sucesso!");
+		
+		cliente.visualizar();
+		
 	}
 	
 

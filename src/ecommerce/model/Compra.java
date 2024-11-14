@@ -9,13 +9,15 @@ public class Compra {
 	private float preco;
 	private int quantidade;
 	private LocalDate dataCompra;
+	private String formaPagamento;
 	
-	public Compra(int id, String nomeProduto, float preco, int quantidade, LocalDate dataCompra) {
+	public Compra(int id, String nomeProduto, float preco, int quantidade, LocalDate dataCompra, String pagamento) {
 		this.nomeProduto = nomeProduto;
 		this.preco = preco;
 		this.dataCompra = dataCompra;
 		this.idCompra = id;
 		this.quantidade = quantidade;
+		this.formaPagamento = pagamento;
 	}
 	public String getNomeProduto() {
 		return nomeProduto;
@@ -44,7 +46,7 @@ public class Compra {
 	}
 	@Override
 	public String toString() {
-		return "ID: " + idCompra + ", Produto = " + nomeProduto + ", Preco = " + preco + ", Data Compra = " + dataCompra + ", Quantidade = " + quantidade;
+		return "ID: " + idCompra + ", Produto = " + nomeProduto + ", Preco = " + preco + ", Data Compra = " + dataCompra + ", Quantidade = " + quantidade + "Pagamento: " + formaPagamento;
 	}
 	
 	

@@ -26,6 +26,7 @@ public class Menu {
 					9 - Excluir produto**
 					---------------------------------------------------------------
 					10 - Comprar*                 | 11 - Visualizar Compras*
+					12 - Adicionar Saldo na Carteira
 					---------------------------------------------------------------
 					*Apenas Clientes **Apenas funcionarios
 					---------------------------------------------------------------
@@ -65,6 +66,8 @@ public class Menu {
 				case 10 -> usuario.comprar();
 
 				case 11 -> usuario.visualizarCompras();
+				
+				case 12 -> usuario.adicionarSaldoCarteira();
 
 				default -> System.out.println("\nOpção Inválida!\n");
 
