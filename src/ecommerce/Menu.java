@@ -1,10 +1,7 @@
 package ecommerce;
 
-import java.time.LocalDate;
-
-import ecommerce.model.produto.Produto;
-import ecommerce.model.usuario.Cliente;
-import ecommerce.model.usuario.Funcionario;
+import ecommerce.controller.ProdutoController;
+import ecommerce.controller.UsuarioController;
 import ecommerce.util.Cores;
 import ecommerce.util.Leitura;
 
@@ -12,29 +9,28 @@ public class Menu {
 
 	public static void main(String[] args) {
 
+		UsuarioController usuario = new UsuarioController();
+		ProdutoController produto = new ProdutoController();
+
 		while (true) {
 
 			System.out.print(Cores.TEXT_YELLOW + """
-					***************************************************
-							MERCADO DOS SONHOS
-					***************************************************
-					1 - Cadastrar Perfil
-					2 - Atualizar Perfil
-					3 - Excluir Perfil
-					--------------------------------------------------
-					4 - Cadastrar produto
-					5 - Listar todos os produtos
-					6 - Bucar produto por nome ou código
-					7 - Atualizar produto
-					8 - Excluir produto
-					--------------------------------------------------
-					9 - Comprar
-					10 - Visualizar Compras
-					--------------------------------------------------
-					11 - Testes
-					--------------------------------------------------
+					***************************************************************
+							     MERCADO DOS SONHOS
+					***************************************************************
+					1 - Cadastrar Perfil          | 2 - Atualizar Perfil
+					3 - Excluir Perfil            | 4 - Visualizar Perfil
+					---------------------------------------------------------------
+					5 - Cadastrar produto**       | 6 - Listar todos os produtos
+					7 - Bucar produto por código  | 8 - Atualizar produto**
+					9 - Excluir produto**
+					---------------------------------------------------------------
+					10 - Comprar*                 | 11 - Visualizar Compras*
+					---------------------------------------------------------------
+					*Apenas Clientes **Apenas funcionarios
+					---------------------------------------------------------------
 					0 - Sair
-					***************************************************
+					***************************************************************
 					""" + Cores.TEXT_RESET);
 			try {
 				int opcao = Leitura.lerInteiro(Cores.ANSI_BLACK_BACKGROUND + Cores.TEXT_YELLOW
@@ -48,27 +44,27 @@ public class Menu {
 
 				switch (opcao) {
 
-				case 1 -> System.out.println("cadastrando perfil...");
+				case 1 -> usuario.cadastrarUsuario();
 
-				case 2 -> System.out.println("atualizando perfil...");
+				case 2 -> usuario.atualizarUsuario();
 
-				case 3 -> System.out.println("excluindo perfil...");
+				case 3 -> usuario.deletarUsuario();
 
-				case 4 -> System.out.println("cadastrar produto...");
+				case 4 -> usuario.procurarUsuarioPorLogin();
 
-				case 5 -> System.out.println("listando todos os produtos...");
+				case 5 -> produto.cadastrarProduto();
 
-				case 6 -> System.out.println("buscando produto por nome ou código...");
-				
-				case 7 -> System.out.println("atualizando produto...");
-				
-				case 8 -> System.out.println("excluindo produto...");
-				
-				case 9 -> System.out.println("comprando...");
-				
-				case 10 -> System.out.println("visualizando compras");
-				
-				case 11 -> testes();
+				case 6 -> produto.listarTodosProdutos();
+
+				case 7 -> produto.procurarProdutoPorCodigo();
+
+				case 8 -> produto.atualizarProduto();
+
+				case 9 -> produto.deletarProduto();
+
+				case 10 -> usuario.comprar();
+
+				case 11 -> usuario.visualizarCompras();
 
 				default -> System.out.println("\nOpção Inválida!\n");
 
@@ -90,23 +86,5 @@ public class Menu {
 				Email: andrelins2403@gmail.com
 				****************************************************
 				""");
-	}
-	public static void testes() {
-		
-		System.out.println("Criando funcionario: ");
-		
-		Funcionario funcionario = new Funcionario("Andre Lins", LocalDate.of(1999, 01, 18), "a.lins", 1801, "Dev Java", 4000f);
-		funcionario.visualizar();
-		
-		System.out.println("Criando um cliente: ");
-		
-		Cliente cliente = new Cliente("Andre de Brito", LocalDate.of(1999, 01, 18), "andre.brito", 1801, "SBC - SP");
-		cliente.visualizar();
-		
-		System.out.println("Criando um produto: ");
-		
-		Produto produto = new Produto(1,"Cafe", 18.99f,20,false);
-		System.out.println(produto);
-			
 	}
 }

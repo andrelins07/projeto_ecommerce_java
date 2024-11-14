@@ -2,6 +2,8 @@ package ecommerce.util;
 
 import java.util.Scanner;
 
+import ecommerce.exception.RegraDeNegocioException;
+
 public class Leitura {
 
 	private static Scanner scan = new Scanner(System.in);
@@ -14,12 +16,18 @@ public class Leitura {
 	
 	public static int lerInteiro(String mensagem) {
 
+		int numero;
+		
 		try {
-			return Integer.parseInt(leitura(mensagem));
+			numero = Integer.parseInt(leitura(mensagem));
 		} catch (NumberFormatException e) {
-			throw new RuntimeException("Entrada Inválida!");
+			throw new RegraDeNegocioException("Entrada Inválida!");
 		}
-
+		
+		if(numero < 0) {
+			throw new RegraDeNegocioException("Entrada inválida! Numero negativo");
+		}
+		return numero;
 	}
 
 	public static float lerFloat(String mensagem) {
@@ -29,12 +37,10 @@ public class Leitura {
 		try {
 			numero = Float.parseFloat(leitura(mensagem));
 		} catch (NumberFormatException e) {
-			throw new RuntimeException("Entrada Inválida!");
-		}
+			throw new RegraDeNegocioException("Entrada Inválida!");		}
 		
 		if(numero < 0.0f) {
-			throw new RuntimeException("Entrada Inválida!");
-		}
+			throw new RegraDeNegocioException("Entrada Inválida!");		}
 		
 		return numero;
 
