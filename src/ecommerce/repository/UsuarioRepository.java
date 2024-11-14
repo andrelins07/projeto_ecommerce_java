@@ -1,5 +1,6 @@
 package ecommerce.repository;
 
+import ecommerce.model.produto.Produto;
 import ecommerce.model.usuario.Usuario;
 
 public interface UsuarioRepository {
@@ -13,4 +14,7 @@ public interface UsuarioRepository {
 	
 	public void deletarUsuario(Usuario usuario);
 	
+	public void comprar(Produto produto, Usuario usuario);
+	
+	public void visualizarCompras(Usuario usuario);
 }
