@@ -1,7 +1,7 @@
 package ecommerce.model.pagamento;
 
 import ecommerce.exception.RegraDeNegocioException;
-import ecommerce.model.Cliente;
+import ecommerce.model.usuario.Cliente;
 
 public class PagamentoCredito extends Pagamento {
 
@@ -18,7 +18,8 @@ public class PagamentoCredito extends Pagamento {
 	public void processarPagamento() {
 
 		if (this.getValor() > cliente.getCreditoCarteira()) {
-			throw new RegraDeNegocioException("Saldo na carteira é insuficiente!");
+			throw new RegraDeNegocioException("Saldo na carteira é insuficiente!\nValor na carteira: "
+					+ cliente.getCreditoCarteira() + " | Valor da compra: " + this.getValor());
 		}
 		System.out.println("Forma de pagamento: Crédito\n" +  "Valor da compra: R$ " + getValor());
 	}

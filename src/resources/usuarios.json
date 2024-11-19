@@ -1,0 +1,19 @@
+[ {
+  "nome" : "Andre Lins",
+  "idade" : 35,
+  "cpf" : "12345678911",
+  "login" : "admin",
+  "senha" : 1234,
+  "role" : "FUNCIONARIO",
+  "cargo" : "Gerente",
+  "salario" : 7500.5
+}, {
+  "nome" : "Ana Souza",
+  "idade" : 28,
+  "cpf" : "56734871233",
+  "login" : "anasouza",
+  "senha" : 5678,
+  "role" : "CLIENTE",
+  "enderecoEntrega" : "Rua das Flores, 123",
+  "creditoCarteira" : 271.75
+} ]

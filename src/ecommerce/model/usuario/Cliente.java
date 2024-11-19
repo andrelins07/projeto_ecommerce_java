@@ -1,32 +1,40 @@
-package ecommerce.model;
+package ecommerce.model.usuario;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import ecommerce.model.compra.Compra;
 import ecommerce.model.pagamento.Pagamento;
 
 public class Cliente extends Usuario {
 	
 	private String enderecoEntrega;
 	private float creditoCarteira;
+	@JsonIgnore(value = true)
 	private ArrayList<Compra> historicoCompra;
 	
-	public Cliente(String nome, int idade, String login, int senha, String endereco) {
-		super(nome, idade, login, senha);
-		this.enderecoEntrega = endereco;
-		this.setRole(Role.CLIENTE);
-		historicoCompra = new ArrayList<>();
+	public Cliente() {
+		
 	}
-
+	
+	public Cliente(String nome, int idade, String cpf, String login, int senha, String endereco) {
+		super(nome, idade, cpf, login, senha, Role.CLIENTE.getValue());
+		this.enderecoEntrega = endereco;
+		historicoCompra = new ArrayList<>();
+		System.out.println("ENTREI");
+	}
 	public float getCreditoCarteira() {
 		return creditoCarteira;
 	}
 
-	public void adicionarSaldoCarteira(float creditoCarteira) {
+	public void setCreditoCarteira(float creditoCarteira) {
 		this.creditoCarteira = creditoCarteira;
 	}
-	
 
+	public void adicionarSaldoCarteira(float creditoCarteira) {
+		this.creditoCarteira += creditoCarteira;
+	}
+	
 	public String getEnderecoEntrega() {
 		return enderecoEntrega;
 	}
@@ -39,11 +47,18 @@ public class Cliente extends Usuario {
 		
 		return historicoCompra;
 	}
-
-	public void realizarCompra(String nomeProduto, int quantidade, LocalDate dataCompra, Pagamento pagamento) {
 	
-		int id = historicoCompra.size() + 1;
-		historicoCompra.add(new Compra(id, nomeProduto, pagamento.getValor(), quantidade, dataCompra, pagamento.getPagamento()));
+	public ArrayList<Compra> getHistoricoCompra() {
+		return historicoCompra;
+	}
+	
+	public void setHistoricoCompra(ArrayList<Compra> historicoCompra) {
+		this.historicoCompra = historicoCompra;
+	}
+
+	public void realizarCompra(String nomeProduto, int quantidade, LocalDate dataCompra, Pagamento pagamento, String cpf) {
+	
+		historicoCompra.add(new Compra(nomeProduto, pagamento.getValor(), quantidade, dataCompra, pagamento.getPagamento(), cpf));
 		
 		if(pagamento.getPagamento().equals("CREDITO")) {
 			this.creditoCarteira -= pagamento.getValor();
@@ -71,13 +86,13 @@ public class Cliente extends Usuario {
 				Cliente:
 				****************************************************************\n""");
 		super.visualizar();
-		System.out.printf("Endereco Entrega: %s\n\n", this.enderecoEntrega);
+		System.out.printf("Endereco Entrega: %s | Saldo na Carteira: %.2f\n", this.enderecoEntrega, this.creditoCarteira);
 	}
 
 	@Override
 	public String toString() {
 		return "Nome = " + getNome() + " | Idade = " + getIdade() + " | Login = " + getLogin() + " | Senha = " + getSenha() + 
-				"\nEndereco de Entrega: " + this.enderecoEntrega + "  Saldo na Carteira: " + this.creditoCarteira;
+				"\nEndereco de Entrega: " + this.enderecoEntrega + "  Saldo na Carteira: " + this.creditoCarteira + "\n";
 	}
 	
 }

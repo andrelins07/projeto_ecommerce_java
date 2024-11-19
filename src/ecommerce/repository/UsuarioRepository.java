@@ -1,8 +1,12 @@
 package ecommerce.repository;
 
+import ecommerce.model.usuario.Usuario;
+
 public interface UsuarioRepository {
 	
-	public void procurarUsuarioPorLogin();
+	public Usuario buscarUsuario();
+	
+	public void visualizarUsuario();
 	
 	public void cadastrarUsuario( );
 	

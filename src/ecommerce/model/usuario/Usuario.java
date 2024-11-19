@@ -1,50 +1,80 @@
-package ecommerce.model;
+package ecommerce.model.usuario;
+
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
+@JsonTypeInfo(use = JsonTypeInfo.Id.DEDUCTION)
+
+@JsonSubTypes({ 
+	@JsonSubTypes.Type(value = Funcionario.class, name = "FUNCIONARIO"), 
+	@JsonSubTypes.Type(value = Cliente.class, name = "CLIENTE")})
 
 public abstract class Usuario {
 
 	private String nome;
 	private int idade;
+	private String cpf;
 	private String login;
 	private int senha;
-	private Role role;
+	private String role;
 
-
-	public Usuario(String nome, int idade, String login, int senha) {
+	public Usuario(String nome, int idade, String cpf, String login, int senha, String role) {
 		this.nome = nome;
 		this.idade = idade;
+		this.cpf = cpf;
 		this.login = login;
 		this.senha = senha;
+		this.role = role;
 	}
 	
+	public Usuario() {
+		
+	}
 	public String getNome() {
 		return nome;
 	}
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
 	public int getIdade() {
 		return idade;
 	}
+
 	public void setIdade(int idade) {
 		this.idade = idade;
 	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
 	public String getLogin() {
 		return login;
 	}
+
 	public void setLogin(String login) {
 		this.login = login;
 	}
+
 	public int getSenha() {
 		return senha;
 	}
+
 	public void setSenha(int senha) {
 		this.senha = senha;
 	}
-	public Role getRole() {
+
+	public String getRole() {
 		return role;
 	}
 
-	public void setRole(Role role) {
+	public void setRole(String role) {
 		this.role = role;
 	}
 
@@ -72,9 +102,10 @@ public abstract class Usuario {
 			return false;
 		return true;
 	}
-		
+
 	public void visualizar() {
-		System.out.printf("Nome: %s | Idade: %d | Login: %s | Tipo Usuario: %s\n", this.nome, this.idade, this.login, role.name());
-		
+		System.out.printf("Nome: %s | Idade: %d | Login: %s | CPF: %s | Tipo Usuario: %s\n", this.nome, this.idade, this.login, this.cpf,
+				this.role);
+
 	}
 }

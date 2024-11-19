@@ -1,8 +1,14 @@
 package ecommerce.repository;
 
+import java.util.List;
+
+import ecommerce.model.produto.Produto;
+
 public interface ProdutoRepository {
 	
-	public void procurarProdutoPorCodigo();
+	public Produto buscarProdutoPorCodigo();
+	
+	public List<Produto> buscarProdutos();
 	
 	public void listarTodosProdutos();
 	

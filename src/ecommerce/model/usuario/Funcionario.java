@@ -1,4 +1,4 @@
-package ecommerce.model;
+package ecommerce.model.usuario;
 
 public class Funcionario extends Usuario {
 	
@@ -6,11 +6,14 @@ public class Funcionario extends Usuario {
 	private float salario;
 	
 	
-	public Funcionario(String nome, int idade, String login, int senha, String cargo, float salario) {
-		super(nome, idade, login, senha);
+	public Funcionario() {
+		
+	}
+	
+	public Funcionario(String nome, int idade, String cpf, String login, int senha, String cargo, float salario) {
+		super(nome, idade, cpf, login, senha, Role.FUNCIONARIO.getValue());
 		this.cargo = cargo;
 		this.salario = salario;
-		this.setRole(Role.FUNCIONARIO);
 	}
 
 	public String getCargo() {

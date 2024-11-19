@@ -2,25 +2,57 @@ package ecommerce.controller;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import ecommerce.exception.RegraDeNegocioException;
-import ecommerce.model.*;
-import ecommerce.model.pagamento.Pagamento;
-import ecommerce.model.pagamento.PagamentoCredito;
-import ecommerce.model.pagamento.PagamentoDebito;
+import ecommerce.model.pagamento.*;
+import ecommerce.model.produto.Produto;
+import ecommerce.model.usuario.Cliente;
+import ecommerce.model.usuario.Funcionario;
+import ecommerce.model.usuario.Role;
+import ecommerce.model.usuario.Usuario;
 import ecommerce.repository.UsuarioRepository;
-import ecommerce.util.Cores;
-import ecommerce.util.Leitura;
+import ecommerce.util.*;
 
-public class UsuarioController implements UsuarioRepository{
+public class UsuarioController implements UsuarioRepository {
 
+	private static ArrayList<Usuario> usuarios;
+	private ProdutoController produtoController;
 	private Usuario usuario;
-	private static ArrayList<Usuario> usuarios = new ArrayList<>();
-
+	
+	public UsuarioController() {
+		usuarios = DadosEcommerce.carregarTodosUsuarios();
+	}
 	
 	@Override
-	public void procurarUsuarioPorLogin() {
+	public Usuario buscarUsuario() {
+		
+		String login = Leitura.lerString("Digite o seu login: ");
+		int senha = Leitura.lerInteiro("Informe sua senha: ");
+		
+		for (Usuario user : usuarios) {
+			if (user.getLogin().equals(login) && user.getSenha() == senha) {
+				usuario = user;
+				break;
+			}
+		}
+		if(usuario == null)
+			throw new RegraDeNegocioException("Usuario não encontrado. Verifique seu login e senha");
+		
+		
+		if(usuario.getRole().equals(Role.CLIENTE.getValue())) {
+			
+			Cliente cliente = (Cliente) usuario;
+			
+			cliente.setHistoricoCompra(DadosEcommerce.carregarComprasCliente(usuario));
+			
+			usuario = cliente;
+		}
+		return usuario;
+	}
 	
-		usuario = buscarUsuario();
+	@Override
+	public void visualizarUsuario() {
 		usuario.visualizar();
 	}
 
@@ -30,18 +62,19 @@ public class UsuarioController implements UsuarioRepository{
 		String nome = Leitura.lerString("Digite o seu nome: ");
 		int idade = Leitura.lerInteiro("Digite a sua idade: ");
 		String login = Leitura.lerString("Crie um login: ");
+		String cpf = Leitura.lerString("Informe o seu cpf: ");
 		int senha = Leitura.lerInteiro("Crie uma senha: ");
 		int role = Leitura.lerInteiro("Informe seu perfil: \n1 - Cliente | 2 - Funcionario: ");
 
 		switch (role) {
 			case 1 ->{
 				String endereco = Leitura.lerString("Informe seu endereco: ");
-				usuario = (Cliente) new Cliente(nome, idade, login, senha, endereco);
+				usuario = (Cliente) new Cliente(nome, idade, cpf, login, senha, endereco);
 			}
 			case 2 -> {
 				String cargo = Leitura.lerString("Informe o seu cargo: ");
 				float salario = Leitura.lerFloat("Informe o seu salario: ");
-				usuario = (Funcionario) new Funcionario(nome, idade, login, senha, cargo, salario);
+				usuario = (Funcionario) new Funcionario(nome, idade, cpf, login, senha, cargo, salario);
 			}
 			default -> throw new RegraDeNegocioException("Opcao invalida");
 		}
@@ -56,12 +89,10 @@ public class UsuarioController implements UsuarioRepository{
 
 	@Override
 	public void atualizarUsuario() {
-
-		usuario = buscarUsuario();
-
+		
 		System.out.println("Atualizando Login e Senha: ");
 		
-		if(usuario.getRole().equals(Role.CLIENTE)) {
+		if(usuario.getRole().equals(Role.CLIENTE.getValue())) {
 			atualizarCliente((Cliente) usuario);
 		}else {
 			atualizarFuncionario((Funcionario) usuario);
@@ -73,8 +104,6 @@ public class UsuarioController implements UsuarioRepository{
 	
 	@Override
 	public void deletarUsuario() {
-
-		usuario = buscarUsuario();
 
 		usuario.visualizar();
 
@@ -93,30 +122,135 @@ public class UsuarioController implements UsuarioRepository{
 		}
 
 	}
+	
 	@Override
 	public void comprar() {
 		
-		usuario = buscarUsuario();
-		
-		if(!usuario.getRole().equals(Role.CLIENTE)) {
-			throw new RegraDeNegocioException("Acesso restrito para usuario Funcionario!");
+		if(!usuario.getRole().equals(Role.CLIENTE.getValue())) {
+			throw new RegraDeNegocioException("Acesso apenas para clientes!");
 		}
 		
 		Cliente cliente = (Cliente) usuario;
 		
-		Produto produto = ProdutoController.buscarProduto();
+		List<Produto> opcoesProdutos = produtoController.buscarProdutos();
 		
-		produto.visualizarProduto();
+		Produto produtoEscolhido = null;
 		
-		if(produto.isRestricaoIdade() && usuario.getIdade() < 18) {
+		int codigo = Leitura.lerInteiro("Digite o código do produto desejado: ");
+		
+		for (Produto produto : opcoesProdutos) {
+			if(produto.getCodigo() == codigo) {
+				produtoEscolhido = produto;
+				break;
+			}
+		}
+		
+		if(produtoEscolhido == null) {
+			throw new RegraDeNegocioException("Opcao nao localizada no filtro!");	
+		}
+	
+		
+		if(produtoEscolhido.isRestricaoIdade() && usuario.getIdade() < 18) {
 			throw new RegraDeNegocioException("Esse produto é para maiores de 18!");	
 		}
 		
 		int quantidade = Leitura.lerInteiro("Digite a quantidade desejada: ");
 		
-		if(produto.getEstoque() < 0 || quantidade > produto.getEstoque()) {
+		if(produtoEscolhido.getEstoque() < 0 || quantidade > produtoEscolhido.getEstoque()) {
 			throw new RegraDeNegocioException("Estoque insuficiente!");
 		}
+		
+		pagar(cliente, produtoEscolhido, quantidade);
+		
+		produtoEscolhido.setEstoque(quantidade*-1);
+		
+		System.out.println(Cores.TEXT_GREEN + "Compra realizada com sucesso!");
+		
+	}
+	
+	@Override
+	public void visualizarCompras() {
+				
+		if(!usuario.getRole().equals(Role.CLIENTE.getValue())) {
+			throw new RegraDeNegocioException("Acesso apenas para clientes!");
+		}
+	
+		Cliente cliente = (Cliente) usuario;
+		
+		if(cliente.visualizarCompras().isEmpty()) {
+			throw new RegraDeNegocioException("Nenhuma compra realizada!");
+		}
+		
+		System.out.println("Minhas Compras: ");
+		
+		cliente.visualizarCompras().forEach(System.out::println);
+	}
+	
+	public void criarProdutoControler(ProdutoController produtoController) {
+		this.produtoController = produtoController;
+	}
+	
+	public void imprimirUsuarios() {
+		
+		if(!usuario.getRole().equals(Role.FUNCIONARIO.getValue())) {
+			throw new RegraDeNegocioException("Acesso apenas para funcionarios!");
+		}
+		getUsuarios().forEach(user->user.visualizar());
+	}
+	
+	public static List<Usuario> getUsuarios() {
+		
+		if(usuarios.isEmpty()) {
+			throw new RegraDeNegocioException("Nenhum usuario cadastrado!");
+		}
+		
+		return Collections.unmodifiableList(usuarios);
+	}
+		
+	private void atualizarCliente(Cliente cliente) {
+		
+		System.out.println(cliente);
+		
+		String login = Leitura.lerString("Alterando o login: ");
+		int senha = Leitura.lerInteiro("Alterando a senha: ");
+		String endereco = Leitura.lerString("Alterando o endereco: ");
+		
+		cliente.atualizar(login, senha, endereco);
+		
+		cliente.visualizar();
+		
+	}
+	
+	private void atualizarFuncionario(Funcionario funcionario) {
+
+		System.out.println(funcionario);
+		
+		String login = Leitura.lerString("Alterando o login: ");
+		int senha = Leitura.lerInteiro("Alterando a senha: ");
+		String cargo = Leitura.lerString("Alterando cargo: ");
+		float salario = Leitura.lerFloat("Alterando salario: ");
+		funcionario.atualizar(login, senha, cargo, salario);
+	}
+	
+	public void adicionarSaldoCarteira() {
+				
+		if(!usuario.getRole().equals(Role.CLIENTE.getValue())) {
+			throw new RegraDeNegocioException("Acesso apenas para clientes!");
+		}
+	
+		Cliente cliente = (Cliente) usuario;
+		
+		System.out.println("Saldo atual: " + cliente.getCreditoCarteira());
+		
+		cliente.adicionarSaldoCarteira(Leitura.lerFloat("Digite o valor que deseja adicionar: "));
+		
+		System.out.println(Cores.TEXT_GREEN + "Saldo adicionado com sucesso!" + Cores.TEXT_RESET);
+				
+		cliente.visualizar();
+		
+	}
+	
+	public void pagar(Cliente cliente, Produto produto, int quantidade) {
 		
 		int formaPagamento = Leitura.lerInteiro("Qual a forma de pagamento ?\n1 - Credito | 2 - Débito");
 		
@@ -131,81 +265,8 @@ public class UsuarioController implements UsuarioRepository{
 		
 		pagamento.processarPagamento();
 	
-		cliente.realizarCompra(produto.getNome(), quantidade, LocalDate.now(), pagamento);
-		
-		
-		
-		produto.setEstoque(quantidade*-1);
-		
-		
-		System.out.println(Cores.TEXT_GREEN + "Compra realizada com sucesso!");
-	}
-	@Override
-	public void visualizarCompras() {
-
-		usuario = buscarUsuario();
-		
-		if(!usuario.getRole().equals(Role.CLIENTE)) {
-			throw new RegraDeNegocioException("Acesso restrito para usuario Funcionario!");
-		}
-	
-		Cliente cliente = (Cliente) usuario;
-		System.out.println("Minhas Compras: ");
-		
-		cliente.visualizarCompras().forEach(System.out::println);
-	}
-	public static Usuario buscarUsuario() {
-		
-		String login = Leitura.lerString("Digite o seu login: ");
-		int senha = Leitura.lerInteiro("Informe sua senha: ");
-		
-		for (Usuario usuario : usuarios) {
-			if (usuario.getLogin().equals(login) && usuario.getSenha() == senha) {
-				return usuario;
-			}
-		}
-		throw new RegraDeNegocioException("Usuario não encontrado. Verifique seu login e senha");
-	}
-	
-	private void atualizarCliente(Cliente cliente) {
-		
-		System.out.println(cliente);
-		
-		String login = Leitura.lerString("Alterando o login: ");
-		int senha = Leitura.lerInteiro("Alterando a senha: ");
-		String endereco = Leitura.lerString("Alterando o endereco: ");
-		cliente.atualizar(login, senha, endereco);
+		cliente.realizarCompra(produto.getNome(), quantidade, LocalDate.now(), pagamento, cliente.getCpf());
 		
 	}
-	
-	private void atualizarFuncionario(Funcionario funcionario) {
-
-		System.out.println(funcionario);
-		
-		String login = Leitura.lerString("Alterando o login: ");
-		int senha = Leitura.lerInteiro("Alterando a senha: ");
-		String cargo = Leitura.lerString("Alterando cargo: ");
-		float salario = Leitura.lerFloat("Alterando salario: ");
-		funcionario.atualizar(login, senha, cargo, salario);
-	}
-	public void adicionarSaldoCarteira() {
-		
-		usuario = buscarUsuario();
-		
-
-		if(!usuario.getRole().equals(Role.CLIENTE)) {
-			throw new RegraDeNegocioException("Acesso restrito para usuario Funcionario!");
-		}
-	
-		Cliente cliente = (Cliente) usuario;
-
-		cliente.adicionarSaldoCarteira(Leitura.lerFloat("Digite o valor que deseja adicionar: "));
-		
-		System.out.println(Cores.TEXT_GREEN + "Saldo adicionado com sucesso!");
-		
-		cliente.visualizar();
-		
-	}
-	
 
 }

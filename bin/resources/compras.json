@@ -1,0 +1,47 @@
+[
+	{
+		"idCompra": 1,
+		"cpfCliente": "56734871233",
+		"nomeProduto": "Carne Moída",
+		"preco": 35.82,
+		"quantidade": 2,
+		"dataCompra": "2024-11-18",
+		"formaPagamento": "DEBITO"
+	},
+	{
+		"idCompra": 2,
+		"cpfCliente": "56734871233",
+		"nomeProduto": "Chocolate Barra",
+		"preco": 20.0,
+		"quantidade": 5,
+		"dataCompra": "2024-11-19",
+		"formaPagamento": "CREDITO"
+	},
+	{
+		"idCompra": 3,
+		"cpfCliente": "56734871233",
+		"nomeProduto": "Cafe",
+		"preco": 63.75,
+		"quantidade": 5,
+		"dataCompra": "2024-11-19",
+		"formaPagamento": "CREDITO"
+	},
+	{
+		"idCompra": 4,
+		"cpfCliente": "56734871233",
+		"nomeProduto": "Refrigerante 2L",
+		"preco": 18.0,
+		"quantidade": 3,
+		"dataCompra": "2024-11-19",
+		"formaPagamento": "CREDITO"
+	},
+	{
+		"idCompra": 5,
+		"cpfCliente": "56734871233",
+		"nomeProduto": "Cuscuz",
+		"preco": 27.0,
+		"quantidade": 5,
+		"dataCompra": "2024-11-19",
+		"formaPagamento": "CREDITO"
+	}
+]
