@@ -6,7 +6,7 @@
   "senha" : 1234,
   "role" : "FUNCIONARIO",
   "cargo" : "Gerente",
-  "salario" : 7500.5
+  "salario" : 7500.0
 }, {
   "nome" : "Ana Souza",
   "idade" : 28,
@@ -15,5 +15,5 @@
   "senha" : 5678,
   "role" : "CLIENTE",
   "enderecoEntrega" : "Rua das Flores, 123",
-  "creditoCarteira" : 271.75
+  "creditoCarteira" : 174.25
 } ]

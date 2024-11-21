@@ -1,10 +1,8 @@
 package ecommerce.model.usuario;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import ecommerce.model.compra.Compra;
-import ecommerce.model.pagamento.Pagamento;
 
 public class Cliente extends Usuario {
 	
@@ -56,12 +54,13 @@ public class Cliente extends Usuario {
 		this.historicoCompra = historicoCompra;
 	}
 
-	public void realizarCompra(String nomeProduto, int quantidade, LocalDate dataCompra, Pagamento pagamento, String cpf) {
+	public void realizarCompra(Compra novaCompra) {
 	
-		historicoCompra.add(new Compra(nomeProduto, pagamento.getValor(), quantidade, dataCompra, pagamento.getPagamento(), cpf));
 		
-		if(pagamento.getPagamento().equals("CREDITO")) {
-			this.creditoCarteira -= pagamento.getValor();
+		historicoCompra.add(novaCompra);
+		
+		if(novaCompra.getFormaPagamento().equals("CREDITO")) {
+			this.creditoCarteira -= novaCompra.getPreco();
 			System.out.println("Saldo na carteira: " + this.creditoCarteira);
 		}
 	}

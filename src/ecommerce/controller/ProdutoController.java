@@ -8,10 +8,9 @@ import ecommerce.model.produto.Produto;
 import ecommerce.model.usuario.Role;
 import ecommerce.model.usuario.Usuario;
 import ecommerce.repository.ProdutoRepository;
-import ecommerce.util.Arquivos;
 import ecommerce.util.Cores;
+import ecommerce.util.DadosEcommerce;
 import ecommerce.util.Leitura;
-import ecommerce.util.ManipularJson;
 
 public class ProdutoController  implements ProdutoRepository {
 	
@@ -21,8 +20,7 @@ public class ProdutoController  implements ProdutoRepository {
 	
 	public ProdutoController(Usuario usuario) {
 		this.usuario = usuario;
-		produtos = ManipularJson.carregarJson(Arquivos.PRODUTOS, Produto.class);
-		Produto.setTotalProdutos(produtos.size() + 1);
+		produtos = DadosEcommerce.carregarTodosProdutos();
 	}
 	
 	@Override

@@ -50,7 +50,7 @@
   "codigo" : 9,
   "nome" : "Vinho Tinto 750ml",
   "preco" : 35.0,
-  "estoque" : 18,
+  "estoque" : 16,
   "restricaoIdade" : true
 }, {
   "codigo" : 10,
@@ -68,7 +68,7 @@
   "codigo" : 12,
   "nome" : "Coca Cola",
   "preco" : 15.7,
-  "estoque" : 50,
+  "estoque" : 49,
   "restricaoIdade" : false
 }, {
   "codigo" : 13,
@@ -81,5 +81,11 @@
   "nome" : "Cheetos",
   "preco" : 12.5,
   "estoque" : 20,
+  "restricaoIdade" : false
+}, {
+  "codigo" : 15,
+  "nome" : "Batata Elma Chips",
+  "preco" : 13.75,
+  "estoque" : 33,
   "restricaoIdade" : false
 } ]

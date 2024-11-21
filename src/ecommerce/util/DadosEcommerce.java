@@ -8,16 +8,16 @@ import ecommerce.model.compra.Compra;
 
 public class DadosEcommerce {
 
-	private static ArrayList<Usuario> usuarios = ManipularJson.carregarJson(Arquivos.USUARIOS, Usuario.class);;
-	private static ArrayList<Produto> produtos = ManipularJson.carregarJson(Arquivos.PRODUTOS, Produto.class);;
-	private static ArrayList<Compra> compras = ManipularJson.carregarJson(Arquivos.COMPRAS, Compra.class);;
+	private static ArrayList<Usuario> usuarios = ManipularJson.carregarJson(Arquivos.USUARIOS, Usuario.class);
+	private static ArrayList<Produto> produtos = ManipularJson.carregarJson(Arquivos.PRODUTOS, Produto.class);
+	private static ArrayList<Compra> compras = ManipularJson.carregarJson(Arquivos.COMPRAS, Compra.class);
 
 	public static ArrayList<Usuario> carregarTodosUsuarios() {
 		return usuarios;
 	}
 
 	public static ArrayList<Produto> carregarTodosProdutos() {
-
+		Produto.setTotalProdutos(produtos.size() + 1);
 		return produtos;
 	}
 

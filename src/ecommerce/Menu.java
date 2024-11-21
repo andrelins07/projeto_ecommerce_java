@@ -90,6 +90,7 @@ public class Menu {
 				if (opcao == 0) {
 					System.out.println("Obrigado por comprar com a gente. Volte sempre!\n");
 					ManipularJson.salvarAtualizacoes(Arquivos.PRODUTOS, ProdutoController.getProdutos());
+					//ManipularJson.salvarAtualizacoes(Arquivos.COMPRAS, null);
 					break;
 				}
 

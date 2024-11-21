@@ -1,11 +1,11 @@
-package ecommerce.database;
+package ecommerce.service;
 
 import java.util.List;
 
 import ecommerce.model.produto.Produto;
 import ecommerce.repository.ProdutoRepository;
 
-public class ProdutosDatabase implements ProdutoRepository{
+public class ProdutosService implements ProdutoRepository{
 
 	@Override
 	public Produto buscarProdutoPorCodigo() {

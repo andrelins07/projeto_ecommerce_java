@@ -11,6 +11,7 @@ import ecommerce.model.usuario.Cliente;
 import ecommerce.model.usuario.Funcionario;
 import ecommerce.model.usuario.Role;
 import ecommerce.model.usuario.Usuario;
+import ecommerce.model.compra.Compra;
 import ecommerce.repository.UsuarioRepository;
 import ecommerce.util.*;
 
@@ -229,6 +230,7 @@ public class UsuarioController implements UsuarioRepository {
 		int senha = Leitura.lerInteiro("Alterando a senha: ");
 		String cargo = Leitura.lerString("Alterando cargo: ");
 		float salario = Leitura.lerFloat("Alterando salario: ");
+		
 		funcionario.atualizar(login, senha, cargo, salario);
 	}
 	
@@ -264,9 +266,12 @@ public class UsuarioController implements UsuarioRepository {
 		}
 		
 		pagamento.processarPagamento();
-	
-		cliente.realizarCompra(produto.getNome(), quantidade, LocalDate.now(), pagamento, cliente.getCpf());
 		
+		Compra novaCompra = new Compra(produto.getNome(), pagamento.getValor(), quantidade, LocalDate.now(), pagamento.getPagamento(), cliente.getCpf());
+	
+		cliente.realizarCompra(novaCompra);
+		
+		DadosEcommerce.registrarCompra(novaCompra);
 	}
 
 }
