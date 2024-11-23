@@ -1,25 +1,24 @@
 package ecommerce.model.pagamento;
 
 import ecommerce.exception.RegraDeNegocioException;
-import ecommerce.model.usuario.Cliente;
 
 public class PagamentoCredito extends Pagamento {
 
-	private Cliente cliente;
+	private float carteiraCliente;
 
 	private static final String PAGAMENTO = "CREDITO";
 
-	public PagamentoCredito(float valor, Cliente cliente) {
+	public PagamentoCredito(float valor, float carteiraCliente) {
 		super(valor, PAGAMENTO);
-		this.cliente = cliente;
+		this.carteiraCliente = carteiraCliente;
 	}
 
 	@Override
 	public void processarPagamento() {
 
-		if (this.getValor() > cliente.getCreditoCarteira()) {
+		if (this.getValor() > carteiraCliente) {
 			throw new RegraDeNegocioException("Saldo na carteira é insuficiente!\nValor na carteira: "
-					+ cliente.getCreditoCarteira() + " | Valor da compra: " + this.getValor());
+					+ carteiraCliente + " | Valor da compra: " + this.getValor());
 		}
 		System.out.println("Forma de pagamento: Crédito\n" +  "Valor da compra: R$ " + getValor());
 	}

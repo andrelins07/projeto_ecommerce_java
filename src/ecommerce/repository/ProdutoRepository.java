@@ -2,20 +2,21 @@ package ecommerce.repository;
 
 import java.util.List;
 
+import ecommerce.model.produto.DadosAtualizacaoProduto;
 import ecommerce.model.produto.Produto;
 
 public interface ProdutoRepository {
 	
-	public Produto buscarProdutoPorCodigo();
+	public Produto buscarProdutoPorCodigo(int codigo);
 	
-	public List<Produto> buscarProdutos();
+	public List<Produto> filtrarProdutos(String nome);
 	
-	public void listarTodosProdutos();
+	public List<Produto> listarTodosProdutos();
 	
-	public void cadastrarProduto();
+	public void cadastrarProduto(Produto produto);
 	
-	public void atualizarProduto();
+	public void atualizarProduto(Produto produto, DadosAtualizacaoProduto dadosAtualizado);
 	
-	public void deletarProduto();
+	public void deletarProduto(Produto produto);
 	
 }

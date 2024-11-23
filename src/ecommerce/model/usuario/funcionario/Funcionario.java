@@ -1,10 +1,12 @@
-package ecommerce.model.usuario;
+package ecommerce.model.usuario.funcionario;
+
+import ecommerce.model.usuario.Role;
+import ecommerce.model.usuario.Usuario;
 
 public class Funcionario extends Usuario {
 	
 	private String cargo;
 	private float salario;
-	
 	
 	public Funcionario() {
 		
@@ -24,30 +26,13 @@ public class Funcionario extends Usuario {
 		this.cargo = cargo;
 	}
 
-
 	public float getSalario() {
 		return salario;
 	}
 
-
 	public void setSalario(float salario) {
 		this.salario = salario;
 	}	
-	public void atualizar(String login, int senha, String cargo, float salario) {
-		
-		if(!getLogin().equals(login)) {
-			setLogin(login);
-		}
-		if(getSenha() != senha) {
-			setSenha(senha);
-		}
-		if(!this.cargo.equals(cargo)) {
-			this.cargo = cargo;
-		}
-		if(this.salario != salario) {
-			this.salario = salario;
-		}
-	}
 	
 	@Override
 	public void visualizar() {

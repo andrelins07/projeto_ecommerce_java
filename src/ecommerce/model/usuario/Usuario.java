@@ -3,6 +3,9 @@ package ecommerce.model.usuario;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
+import ecommerce.model.usuario.cliente.Cliente;
+import ecommerce.model.usuario.funcionario.Funcionario;
+
 @JsonTypeInfo(use = JsonTypeInfo.Id.DEDUCTION)
 
 @JsonSubTypes({ 

@@ -1,8 +1,10 @@
-package ecommerce.model.usuario;
+package ecommerce.model.usuario.cliente;
 
 import java.util.ArrayList;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import ecommerce.model.compra.Compra;
+import ecommerce.model.usuario.Role;
+import ecommerce.model.usuario.Usuario;
 
 public class Cliente extends Usuario {
 	
@@ -14,7 +16,7 @@ public class Cliente extends Usuario {
 	public Cliente() {
 		
 	}
-	
+
 	public Cliente(String nome, int idade, String cpf, String login, int senha, String endereco) {
 		super(nome, idade, cpf, login, senha, Role.CLIENTE.getValue());
 		this.enderecoEntrega = endereco;
@@ -62,19 +64,6 @@ public class Cliente extends Usuario {
 		if(novaCompra.getFormaPagamento().equals("CREDITO")) {
 			this.creditoCarteira -= novaCompra.getPreco();
 			System.out.println("Saldo na carteira: " + this.creditoCarteira);
-		}
-	}
-	
-	public void atualizar(String login, int senha, String endereco) {
-		
-		if(!getLogin().equals(login)) {
-			setLogin(login);
-		}
-		if(getSenha() != senha) {
-			setSenha(senha);
-		}
-		if(!this.enderecoEntrega.equals(endereco)) {
-			this.enderecoEntrega = endereco;
 		}
 	}
 	

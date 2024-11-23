@@ -21,18 +21,6 @@ public class Produto {
 		this.codigo = totalProdutos++;
 	}
 
-	public void atualizar(int codigo, float preco, int estoque) {
-		if (this.codigo != codigo) {
-			this.codigo = codigo;
-		}
-		if (this.preco != preco) {
-			this.preco = preco;
-		}
-		if (this.estoque != estoque) {
-			this.estoque = estoque;
-		}
-	}
-
 	public static void setTotalProdutos(int total) {
 		totalProdutos = total;
 	}
