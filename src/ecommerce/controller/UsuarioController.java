@@ -23,25 +23,25 @@ public class UsuarioController {
 	private ProdutoService produtoService = new ProdutoService();
 	private CompraService compraService = new CompraService();
 	private Usuario usuario;
-
+	
 	public UsuarioController(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	
+
 	public void visualizarUsuario() {
 		usuario.visualizar();
 	}
-	
+
 	public void atualizarUsuario() {
 
 		usuario.visualizar();
-		
+
 		if (usuario.getRole().equals(Role.CLIENTE.getValue())) {
 			atualizarCliente((Cliente) usuario);
 		} else {
 			atualizarFuncionario((Funcionario) usuario);
 		}
-		
+
 		usuario.visualizar();
 
 		System.out.println(Cores.TEXT_GREEN + "Dados atualizados com sucesso!");
@@ -68,18 +68,13 @@ public class UsuarioController {
 
 	public void comprar() {
 
-		if (!usuario.getRole().equals(Role.CLIENTE.getValue())) {
-			throw new RegraDeNegocioException("Acesso apenas para clientes!");
-		}
-		
 		Produto produtoEscolhido = escolherProduto();
-		
+
 		int quantidade = Leitura.lerInteiro("Digite a QUANTIDADE desejada: ");
-		
+
 		produtoService.validarEstoque(produtoEscolhido, quantidade);
-			
+
 		pagar((Cliente) usuario, produtoEscolhido, quantidade);
-		
 
 		produtoEscolhido.setEstoque(quantidade * -1);
 
@@ -91,11 +86,11 @@ public class UsuarioController {
 		String nomeProduto = Leitura.lerString("Digite o NOME do produto: ");
 
 		List<Produto> produtosFiltrados = produtoService.filtrarProdutos(nomeProduto);
-		
-		produtosFiltrados.forEach(produto->produto.visualizarProduto());
+
+		produtosFiltrados.forEach(produto -> produto.visualizarProduto());
 
 		int codigo = Leitura.lerInteiro("Digite o CÓDIGO do produto desejado: ");
-	
+
 		Produto produtoEscolhido = produtoService.selecionarProdutoDoFiltro(codigo);
 
 		if (produtoEscolhido.isRestricaoIdade() && usuario.getIdade() < 18) {
@@ -106,19 +101,11 @@ public class UsuarioController {
 	}
 
 	public void visualizarCompras() {
-
-		if (!usuario.getRole().equals(Role.CLIENTE.getValue())) {
-			throw new RegraDeNegocioException("Acesso apenas para clientes!");
-		}
-	
 		compraService.listarComprasCliente((Cliente) usuario).forEach(System.out::println);
 	}
-	
+
 	public void imprimirUsuarios() {
 
-		if (!usuario.getRole().equals(Role.FUNCIONARIO.getValue())) {
-			throw new RegraDeNegocioException("Acesso apenas para funcionarios!");
-		}
 		usuarioService.listarTodosUsuarios().forEach(user -> user.visualizar());
 	}
 
@@ -127,10 +114,10 @@ public class UsuarioController {
 		String login = Leitura.lerString("Alterando o login: ");
 		int senha = Leitura.lerInteiro("Alterando a senha: ");
 		String endereco = Leitura.lerString("Alterando o endereco: ");
-		
+
 		DadosAtualizacaoCliente dadosAtualizados = new DadosAtualizacaoCliente(login, senha, endereco);
 
-		usuarioService.atualizarCliente(cliente, dadosAtualizados);	
+		usuarioService.atualizarCliente(cliente, dadosAtualizados);
 	}
 
 	private void atualizarFuncionario(Funcionario funcionario) {
@@ -139,17 +126,13 @@ public class UsuarioController {
 		int senha = Leitura.lerInteiro("Alterando a senha: ");
 		String cargo = Leitura.lerString("Alterando cargo: ");
 		float salario = Leitura.lerFloat("Alterando salario: ");
-		
+
 		DadosAtualizacaoFuncionario dadosAtualizados = new DadosAtualizacaoFuncionario(login, senha, cargo, salario);
-		
+
 		usuarioService.atualizarFuncionario(funcionario, dadosAtualizados);
 	}
 
 	public void adicionarSaldoCarteira() {
-
-		if (!usuario.getRole().equals(Role.CLIENTE.getValue())) {
-			throw new RegraDeNegocioException("Acesso apenas para clientes!");
-		}
 
 		Cliente cliente = (Cliente) usuario;
 
@@ -167,9 +150,9 @@ public class UsuarioController {
 		int formaPagamento = Leitura.lerInteiro("Qual a forma de pagamento ?\n1 - Credito | 2 - Débito");
 
 		Pagamento pagamento;
-		
+
 		float precoTotal = produto.getPreco() * quantidade;
-		
+
 		switch (formaPagamento) {
 
 		case 1 -> pagamento = new PagamentoCredito(precoTotal, cliente.getCreditoCarteira());
@@ -178,10 +161,15 @@ public class UsuarioController {
 		}
 
 		pagamento.processarPagamento();
-		
-		Compra novaCompra = new Compra(produto.getNome(), pagamento.getValor(), quantidade, LocalDate.now(), pagamento.getPagamento(), cliente.getCpf());
+
+		Compra novaCompra = new Compra(produto.getNome(), pagamento.getValor(), quantidade, LocalDate.now(),
+				pagamento.getPagamento(), cliente.getCpf());
 
 		usuarioService.efetivarCompra(novaCompra, cliente);
-		compraService.registrarCompra(novaCompra);	
+		compraService.registrarCompra(novaCompra);
+	}
+
+	public void carregarComprasCliente(Cliente cliente) {
+		cliente.setHistoricoCompra(compraService.carregarComprasCliente(cliente));	
 	}
 }

@@ -2,7 +2,6 @@ package ecommerce.service;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import ecommerce.exception.RegraDeNegocioException;
 import ecommerce.model.produto.DadosAtualizacaoProduto;
 import ecommerce.model.produto.Produto;
@@ -15,6 +14,10 @@ public class ProdutoService implements ProdutoRepository {
 	private ArrayList<Produto> produtos = ManipularJson.carregarJson(Arquivos.PRODUTOS, Produto.class);
 	private List<Produto> produtosFiltrados;
 
+	public ProdutoService() {
+		Produto.setTotalProdutos(produtos.size() + 1);
+	}
+	
 	@Override
 	public Produto buscarProdutoPorCodigo(int codigo) {
 
@@ -85,8 +88,7 @@ public class ProdutoService implements ProdutoRepository {
 
 	@Override
 	public void deletarProduto(Produto produto) {
-		// TODO Auto-generated method stub
-
+		produtos.remove(produto);
 	}
 
 	public void validarEstoque(Produto produtoEscolhido, int quantidade) {

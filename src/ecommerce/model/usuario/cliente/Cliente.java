@@ -21,7 +21,6 @@ public class Cliente extends Usuario {
 		super(nome, idade, cpf, login, senha, Role.CLIENTE.getValue());
 		this.enderecoEntrega = endereco;
 		historicoCompra = new ArrayList<>();
-		System.out.println("ENTREI");
 	}
 	public float getCreditoCarteira() {
 		return creditoCarteira;

@@ -4,7 +4,7 @@ import ecommerce.model.usuario.Usuario;
 import ecommerce.util.Cores;
 import ecommerce.util.Leitura;
 
-public class Menu {
+public class ApplicationEcommerce {
 
 	private static Usuario usuario;
 
@@ -36,12 +36,12 @@ public class Menu {
 					usuario = autenticacao.buscarUsuario();
 					usuario.visualizar();
 					System.out.println("SEJA BEM VINDO!");
-					new MenuView(usuario).menuOpcoes();
+					new MenuView(usuario);
 				}
 
 				case 2 -> {
-					autenticacao.cadastrarUsuario();
-					System.out.println("Acesse sua conta");
+					usuario = autenticacao.cadastrarUsuario();
+					System.out.printf("Estamos felizes em te-lo conosco %s! Acesse sua conta para usar nossos servicos.\n", usuario.getNome());
 				}
 
 				}

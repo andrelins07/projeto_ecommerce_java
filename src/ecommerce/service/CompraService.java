@@ -11,10 +11,9 @@ import ecommerce.util.ManipularJson;
 
 public class CompraService {
 
-	private ArrayList<Compra> compras;
+	private static final ArrayList<Compra> compras = ManipularJson.carregarJson(Arquivos.COMPRAS, Compra.class);
 
 	public CompraService() {
-		compras = ManipularJson.carregarJson(Arquivos.COMPRAS, Compra.class);
 		Compra.setTotalCompras(compras.size() + 1);
 	}
 
