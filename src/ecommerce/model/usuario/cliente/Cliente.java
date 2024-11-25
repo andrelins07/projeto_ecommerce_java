@@ -57,12 +57,10 @@ public class Cliente extends Usuario {
 
 	public void realizarCompra(Compra novaCompra) {
 	
-		
 		historicoCompra.add(novaCompra);
 		
 		if(novaCompra.getFormaPagamento().equals("CREDITO")) {
 			this.creditoCarteira -= novaCompra.getPreco();
-			System.out.println("Saldo na carteira: " + this.creditoCarteira);
 		}
 	}
 	
@@ -73,7 +71,7 @@ public class Cliente extends Usuario {
 				Cliente:
 				****************************************************************\n""");
 		super.visualizar();
-		System.out.printf("Endereco Entrega: %s | Saldo na Carteira: %.2f\n", this.enderecoEntrega, this.creditoCarteira);
+		System.out.printf("Endereco Entrega: %s ", this.enderecoEntrega);
 	}
 
 	@Override

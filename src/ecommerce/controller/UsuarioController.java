@@ -75,7 +75,7 @@ public class UsuarioController {
 		produtoService.validarEstoque(produtoEscolhido, quantidade);
 
 		pagar((Cliente) usuario, produtoEscolhido, quantidade);
-
+		
 		produtoEscolhido.setEstoque(quantidade * -1);
 
 		System.out.println(Cores.TEXT_GREEN + "Compra realizada com sucesso!");
