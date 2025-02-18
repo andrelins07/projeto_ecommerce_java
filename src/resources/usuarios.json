@@ -3,17 +3,26 @@
   "idade" : 35,
   "cpf" : "12345678911",
   "login" : "admin",
-  "senha" : 1234,
+  "senha" : 1801,
   "role" : "FUNCIONARIO",
   "cargo" : "Gerente",
-  "salario" : 7500.0
+  "salario" : 15000.0
 }, {
   "nome" : "Ana Souza",
   "idade" : 28,
   "cpf" : "56734871233",
-  "login" : "anasouza",
+  "login" : "a.souza",
   "senha" : 5678,
   "role" : "CLIENTE",
-  "enderecoEntrega" : "Rua das Flores, 123",
-  "creditoCarteira" : 174.25
+  "enderecoEntrega" : "Rua das Flores, 123, SP",
+  "creditoCarteira" : 649.25
+}, {
+  "nome" : "Rodrigo",
+  "idade" : 23,
+  "cpf" : "65675368",
+  "login" : "r.silva",
+  "senha" : 1234,
+  "role" : "CLIENTE",
+  "enderecoEntrega" : "Rua Sao Paulo, Centro",
+  "creditoCarteira" : 0.0
 } ]

@@ -9,11 +9,11 @@ public class MenuCliente extends Menu {
 
 	public MenuCliente(Usuario usuario) {
 		super(usuario);
-		 getUsuarioController().carregarComprasCliente((Cliente) usuario);
+		getUsuarioController().carregarComprasCliente((Cliente) usuario);
 	}
-	
+
 	@Override
-	protected void imprimirMenu() {
+	public void exibirMenu() {
 		System.out.print(Cores.TEXT_YELLOW + """
 				***************************************************************
 						     MERCADO DOS SONHOS
@@ -28,17 +28,20 @@ public class MenuCliente extends Menu {
 				---------------------------------------------------------------
 				0 - Sair
 				***************************************************************
-				""" + Cores.TEXT_RESET);	
+				""" + Cores.TEXT_RESET);
 	}
-	
+
 	@Override
 	public void executar() {
+
 		while (true) {
-				imprimirMenu();
 			try {
+				exibirMenu();
+
 				int opcao = Leitura.lerInteiro("Digite a opcao Desejada: ");
 				System.out.println();
 				if (opcao == 0) {
+					getUsuarioController().salvarAlteracoes();
 					System.out.println("Obrigado por comprar com a gente. Volte sempre!\n");
 					break;
 				}
@@ -49,7 +52,10 @@ public class MenuCliente extends Menu {
 
 				case 2 -> getUsuarioController().atualizarUsuario();
 
-				case 3 -> getUsuarioController().deletarUsuario();
+				case 3 -> {
+					getUsuarioController().deletarUsuario();
+					return;
+				}
 
 				case 4 -> getProdutoController().listarTodosProdutos();
 

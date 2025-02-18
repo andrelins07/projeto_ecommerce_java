@@ -31,29 +31,27 @@ public class ApplicationEcommerce {
 			try {
 				int opcao = Leitura.lerInteiro("Digite a opcao Desejada: ");
 				System.out.println();
-				
+
 				switch (opcao) {
 
-					case 1 -> {
-						usuario = autenticacao.buscarUsuario();
-						if (usuario.getRole().equals(Role.CLIENTE.getValue())) {
-							menu = new MenuCliente(usuario);
-						} else if (usuario.getRole().equals(Role.FUNCIONARIO.getValue())) {
-							menu = new MenuFuncionario(usuario);
-						} else {
-							throw new RegraDeNegocioException(
-									"Não foi possível iniciar a aplicação.Perfil do cliente não identificado.");
-						}
-						menu.executar();
-	
-						// new MenuView(usuario);
+				case 1 -> {
+					usuario = autenticacao.buscarUsuario();
+					if (usuario.getRole().equals(Role.CLIENTE.getValue())) {
+						menu = new MenuCliente(usuario);
+					} else if (usuario.getRole().equals(Role.FUNCIONARIO.getValue())) {
+						menu = new MenuFuncionario(usuario);
+					} else {
+						throw new RegraDeNegocioException(
+								"Não foi possível iniciar a aplicação. Perfil não identificado.");
 					}
-					case 2 -> {
-						usuario = autenticacao.cadastrarUsuario();
-						System.out.printf(
-								"Estamos felizes em te-lo conosco %s! Acesse sua conta para usar nossos servicos.\n",
-								usuario.getNome());
-					}
+					menu.executar();
+				}
+				case 2 -> {
+					usuario = autenticacao.cadastrarUsuario();
+					System.out.printf(
+							"Estamos felizes em te-lo conosco %s! Acesse sua conta para usar nossos servicos.\n",
+							usuario.getNome());
+				}
 
 				}
 				if (opcao == 0) {

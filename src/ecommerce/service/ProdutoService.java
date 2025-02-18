@@ -42,7 +42,7 @@ public class ProdutoService implements ProdutoRepository {
 		return produtosFiltrados;
 	}
 
-	public Produto selecionarProdutoDoFiltro(int codigo) {
+	public Produto obterProdutoFiltrado(int codigo) {
 
 		for (Produto produto : produtosFiltrados) {
 			if (produto.getCodigo() == codigo) {
@@ -74,16 +74,7 @@ public class ProdutoService implements ProdutoRepository {
 
 	@Override
 	public void atualizarProduto(Produto produto, DadosAtualizacaoProduto dadosAtualizado) {
-
-		if(!dadosAtualizado.nome().equals(produto.getNome())) {
-			produto.setNome(dadosAtualizado.nome());
-		}
-		if(dadosAtualizado.preco() != produto.getPreco()) {
-			produto.setPreco(dadosAtualizado.preco());
-		}
-		if(dadosAtualizado.estoque() != produto.getPreco()) {
-			produto.setPreco(dadosAtualizado.preco());
-		}
+		produto.atualizar(dadosAtualizado);
 	}
 
 	@Override
@@ -95,6 +86,9 @@ public class ProdutoService implements ProdutoRepository {
 
 		if (produtoEscolhido.getEstoque() < 0 || quantidade > produtoEscolhido.getEstoque())
 			throw new RegraDeNegocioException("Estoque insuficiente!");
+	}
+	public void salvarAtualizacoes() {
+		ManipularJson.salvarAtualizacoes(Arquivos.PRODUTOS, produtos);
 	}
 
 }

@@ -48,6 +48,7 @@ public class UsuarioService implements UsuarioRepository {
 			throw new RegraDeNegocioException("Usuario já cadastrado");
 
 		usuarios.add(usuario);
+		salvarAtualizacoes();
 	}
 
 	@Override
@@ -64,31 +65,15 @@ public class UsuarioService implements UsuarioRepository {
 	@Override
 	public void atualizarFuncionario(Funcionario funcionario, DadosAtualizacaoFuncionario dadosAtualizados) {
 		
-		if(!dadosAtualizados.login().equals(funcionario.getLogin())) {
-			funcionario.setLogin(dadosAtualizados.login());
-		}
-		if(dadosAtualizados.senha() != funcionario.getSenha()) {
-			funcionario.setSenha(dadosAtualizados.senha());
-		}
-		if(!dadosAtualizados.cargo().equals(funcionario.getCargo())) {
-			funcionario.setCargo(dadosAtualizados.cargo());
-		}
-		if(dadosAtualizados.salario() != funcionario.getSalario()) {
-			funcionario.setSalario(dadosAtualizados.salario());
-		}
+		funcionario.atualizar(dadosAtualizados);
+
 	}
 
 	@Override
 	public void atualizarCliente(Cliente cliente, DadosAtualizacaoCliente dadosAtualizados) {
-		
-		if(!dadosAtualizados.login().equals(cliente.getLogin())) {
-			cliente.setLogin(dadosAtualizados.login());
-		}
-		if(dadosAtualizados.senha() != cliente.getSenha()) {
-			cliente.setSenha(dadosAtualizados.senha());
-		}
-		if(!dadosAtualizados.endereco().equals(cliente.getEnderecoEntrega())) {
-			cliente.setEnderecoEntrega(dadosAtualizados.endereco());
-		}
+		cliente.atualizar(dadosAtualizados);
+	}
+	public void salvarAtualizacoes() {
+		ManipularJson.salvarAtualizacoes(Arquivos.USUARIOS, usuarios);
 	}
 }

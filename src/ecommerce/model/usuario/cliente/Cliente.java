@@ -71,7 +71,7 @@ public class Cliente extends Usuario {
 				Cliente:
 				****************************************************************\n""");
 		super.visualizar();
-		System.out.printf("Endereco Entrega: %s ", this.enderecoEntrega);
+		System.out.printf("Saldo na Carteira: %.2f | Endereco Entrega: %s \n", this.creditoCarteira, this.enderecoEntrega);
 	}
 
 	@Override
@@ -79,5 +79,11 @@ public class Cliente extends Usuario {
 		return "Nome = " + getNome() + " | Idade = " + getIdade() + " | Login = " + getLogin() + " | Senha = " + getSenha() + 
 				"\nEndereco de Entrega: " + this.enderecoEntrega + "  Saldo na Carteira: " + this.creditoCarteira + "\n";
 	}
-	
+
+	public void atualizar(DadosAtualizacaoCliente dadosAtualizados) {
+		
+		this.setLogin(dadosAtualizados.login());
+		this.setSenha(dadosAtualizados.senha());
+		this.enderecoEntrega = dadosAtualizados.endereco();		
+	}
 }

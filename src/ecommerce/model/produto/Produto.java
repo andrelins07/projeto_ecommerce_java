@@ -69,6 +69,12 @@ public class Produto {
 		this.codigo = codigo;
 	}
 
+	public void atualizar(DadosAtualizacaoProduto dadosAtualizado) {
+		this.nome = dadosAtualizado.nome();
+		this.preco = dadosAtualizado.preco();
+		this.estoque = dadosAtualizado.estoque();
+	}
+
 	public void visualizarProduto() {
 		System.out.printf("Codigo: %d | Produto: %s | Preco: %.2f | Estoque: %d | Restricao de Idade: %s\n",
 				this.codigo, this.nome, this.preco, this.estoque, this.restricaoIdade);

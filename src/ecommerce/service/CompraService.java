@@ -46,5 +46,8 @@ public class CompraService {
 		
 		return Collections.unmodifiableList(cliente.getHistoricoCompra());
 	}
+	public void salvarAtualizacoes() {
+		ManipularJson.salvarAtualizacoes(Arquivos.COMPRAS, compras);
+	}
 
 }

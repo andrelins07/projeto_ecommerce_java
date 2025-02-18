@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class Compra {
 	
 	private static int totalCompras = 1;
-	
 	private int idCompra;
 	private String cpfCliente;
 	private String nomeProduto;

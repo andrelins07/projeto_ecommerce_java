@@ -49,5 +49,14 @@ public class Funcionario extends Usuario {
 		return "Nome = " + getNome() + " | Idade = " + getIdade() + " | Login = " + getLogin() + " | Senha = " + getSenha() + 
 				"\nCargo: " + this.cargo + " | Salario: " + getSalario();
 	}
+
+	public void atualizar(DadosAtualizacaoFuncionario dadosAtualizados) {
+		
+		this.setLogin(dadosAtualizados.login());
+		this.setSenha(dadosAtualizados.senha());
+		this.setCargo(dadosAtualizados.cargo());
+		this.setSalario(dadosAtualizados.salario());
+		
+	}
 	
 }

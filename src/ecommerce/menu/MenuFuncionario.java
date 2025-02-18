@@ -4,14 +4,14 @@ import ecommerce.model.usuario.Usuario;
 import ecommerce.util.Cores;
 import ecommerce.util.Leitura;
 
-public class MenuFuncionario extends Menu{
+public class MenuFuncionario extends Menu {
 
 	public MenuFuncionario(Usuario usuario) {
 		super(usuario);
 	}
-	
+
 	@Override
-	protected void imprimirMenu() {
+	public void exibirMenu() {
 		System.out.print(Cores.TEXT_YELLOW + """
 				***************************************************************
 						     MERCADO DOS SONHOS
@@ -27,15 +27,18 @@ public class MenuFuncionario extends Menu{
 				***************************************************************
 				""" + Cores.TEXT_RESET);
 	}
-	
+
 	@Override
 	public void executar() {
+
 		while (true) {
-			imprimirMenu();
 			try {
+				exibirMenu();
+
 				int opcao = Leitura.lerInteiro("Digite a opcao Desejada: ");
 				System.out.println();
 				if (opcao == 0) {
+					getUsuarioController().salvarAlteracoes();
 					System.out.println("Obrigado por comprar com a gente. Volte sempre!\n");
 					break;
 				}

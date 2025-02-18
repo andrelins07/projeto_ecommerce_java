@@ -10,8 +10,12 @@ import ecommerce.util.Leitura;
 
 public class ProdutoController {
 
-	private ProdutoService produtoService = new ProdutoService();
+	private ProdutoService produtoService;
 	private Produto produto;
+	
+	public ProdutoController(ProdutoService produtoService) {
+		this.produtoService = produtoService;
+	}
 
 	public void buscarProdutos() {
 

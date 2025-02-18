@@ -23,9 +23,13 @@ public class UsuarioController {
 	private ProdutoService produtoService = new ProdutoService();
 	private CompraService compraService = new CompraService();
 	private Usuario usuario;
-	
-	public UsuarioController(Usuario usuario) {
+
+	public UsuarioController(Usuario usuario, UsuarioService usuarioService, ProdutoService produtoService,
+			CompraService compraService) {
 		this.usuario = usuario;
+		this.usuarioService = usuarioService;
+		this.produtoService = produtoService;
+		this.compraService = compraService;
 	}
 
 	public void visualizarUsuario() {
@@ -49,7 +53,7 @@ public class UsuarioController {
 
 	public void deletarUsuario() {
 
-		usuario.visualizar();
+		usuario.visualizar(); // trocar a nomenclatura
 
 		System.out.println(Cores.TEXT_RED + "\nTem certeza que deseja excluir o usuario?\n" + Cores.TEXT_RESET);
 
@@ -75,7 +79,7 @@ public class UsuarioController {
 		produtoService.validarEstoque(produtoEscolhido, quantidade);
 
 		pagar((Cliente) usuario, produtoEscolhido, quantidade);
-		
+
 		produtoEscolhido.setEstoque(quantidade * -1);
 
 		System.out.println(Cores.TEXT_GREEN + "Compra realizada com sucesso!");
@@ -91,7 +95,7 @@ public class UsuarioController {
 
 		int codigo = Leitura.lerInteiro("Digite o CÓDIGO do produto desejado: ");
 
-		Produto produtoEscolhido = produtoService.selecionarProdutoDoFiltro(codigo);
+		Produto produtoEscolhido = produtoService.obterProdutoFiltrado(codigo);
 
 		if (produtoEscolhido.isRestricaoIdade() && usuario.getIdade() < 18) {
 			throw new RegraDeNegocioException("Esse produto é para maiores de 18!");
@@ -145,7 +149,7 @@ public class UsuarioController {
 		System.out.println("Novo Saldo: " + cliente.getCreditoCarteira());
 	}
 
-	public void pagar(Cliente cliente, Produto produto, int quantidade) {
+	public void pagar(Cliente cliente, Produto produto, int quantidade) {	
 
 		int formaPagamento = Leitura.lerInteiro("Qual a forma de pagamento ?\n1 - Credito | 2 - Débito");
 
@@ -170,6 +174,11 @@ public class UsuarioController {
 	}
 
 	public void carregarComprasCliente(Cliente cliente) {
-		cliente.setHistoricoCompra(compraService.carregarComprasCliente(cliente));	
+		cliente.setHistoricoCompra(compraService.carregarComprasCliente(cliente));
 	}
+	public void salvarAlteracoes() {
+		usuarioService.salvarAtualizacoes();
+		compraService.salvarAtualizacoes();
+		produtoService.salvarAtualizacoes();
+	}		
 }

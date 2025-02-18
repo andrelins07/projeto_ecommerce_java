@@ -12,9 +12,9 @@
   "restricaoIdade" : false
 }, {
   "codigo" : 3,
-  "nome" : "Água Mineral 1,5L",
-  "preco" : 2.0,
-  "estoque" : 190,
+  "nome" : "Agua Mineral 1,5L",
+  "preco" : 2.5,
+  "estoque" : 140,
   "restricaoIdade" : false
 }, {
   "codigo" : 4,
@@ -68,7 +68,7 @@
   "codigo" : 12,
   "nome" : "Coca Cola",
   "preco" : 15.7,
-  "estoque" : 49,
+  "estoque" : 47,
   "restricaoIdade" : false
 }, {
   "codigo" : 13,
@@ -86,6 +86,6 @@
   "codigo" : 15,
   "nome" : "Batata Elma Chips",
   "preco" : 13.75,
-  "estoque" : 33,
+  "estoque" : 32,
   "restricaoIdade" : false
 } ]
