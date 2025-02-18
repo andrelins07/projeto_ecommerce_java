@@ -1,0 +1,91 @@
+[ {
+  "codigo" : 1,
+  "nome" : "Leite Integral",
+  "preco" : 4.5,
+  "estoque" : 88,
+  "restricaoIdade" : false
+}, {
+  "codigo" : 2,
+  "nome" : "Pão de Forma",
+  "preco" : 7.2,
+  "estoque" : 35,
+  "restricaoIdade" : false
+}, {
+  "codigo" : 3,
+  "nome" : "Agua Mineral 1,5L",
+  "preco" : 2.5,
+  "estoque" : 140,
+  "restricaoIdade" : false
+}, {
+  "codigo" : 4,
+  "nome" : "Refrigerante 2L",
+  "preco" : 6.0,
+  "estoque" : 72,
+  "restricaoIdade" : false
+}, {
+  "codigo" : 5,
+  "nome" : "Cerveja Lata 350ml",
+  "preco" : 3.5,
+  "estoque" : 94,
+  "restricaoIdade" : true
+}, {
+  "codigo" : 6,
+  "nome" : "Carne Moída",
+  "preco" : 19.9,
+  "estoque" : 20,
+  "restricaoIdade" : false
+}, {
+  "codigo" : 7,
+  "nome" : "Arroz 5kg",
+  "preco" : 22.0,
+  "estoque" : 43,
+  "restricaoIdade" : false
+}, {
+  "codigo" : 8,
+  "nome" : "Óleo de Soja",
+  "preco" : 7.5,
+  "estoque" : 60,
+  "restricaoIdade" : false
+}, {
+  "codigo" : 9,
+  "nome" : "Vinho Tinto 750ml",
+  "preco" : 35.0,
+  "estoque" : 16,
+  "restricaoIdade" : true
+}, {
+  "codigo" : 10,
+  "nome" : "Chocolate Barra",
+  "preco" : 4.0,
+  "estoque" : 32,
+  "restricaoIdade" : false
+}, {
+  "codigo" : 11,
+  "nome" : "Cafe",
+  "preco" : 12.75,
+  "estoque" : 45,
+  "restricaoIdade" : false
+}, {
+  "codigo" : 12,
+  "nome" : "Coca Cola",
+  "preco" : 15.7,
+  "estoque" : 47,
+  "restricaoIdade" : false
+}, {
+  "codigo" : 13,
+  "nome" : "Cuscuz",
+  "preco" : 5.4,
+  "estoque" : 45,
+  "restricaoIdade" : false
+}, {
+  "codigo" : 14,
+  "nome" : "Cheetos",
+  "preco" : 12.5,
+  "estoque" : 20,
+  "restricaoIdade" : false
+}, {
+  "codigo" : 15,
+  "nome" : "Batata Elma Chips",
+  "preco" : 13.75,
+  "estoque" : 32,
+  "restricaoIdade" : false
+} ]
